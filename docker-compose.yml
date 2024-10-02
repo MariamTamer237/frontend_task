@@ -1,0 +1,21 @@
+services:
+  db:
+    image: techniasolutions/technia_task_db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${DATABASE_PASSWORD}
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+
+  backend:
+    image: techniasolutions/technia_task
+    ports:
+      - "8005:8005"
+    environment:
+      DATABASE_HOST: db
+      DATABASE_NAME:  ${DATABASE_NAME}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+    depends_on:
+      - db
